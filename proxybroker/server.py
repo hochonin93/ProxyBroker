@@ -163,7 +163,7 @@ class Server:
         )
         print(
             'Accepted connection from %s'
-            % (client_writer.get_extra_info('peername'),flush=True)
+            % (client_writer.get_extra_info('peername')),flush=True
         )
 
         request, headers = await self._parse_request(client_reader)
