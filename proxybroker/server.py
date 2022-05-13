@@ -140,6 +140,7 @@ class Server:
             reader, writer = self._connections.pop(f)
             writer.close()
             log.debug('client: %d; closed' % id(client_reader))
+            print('client: %d; closed' % id(client_reader), flush=True)
             try:
                 exc = f.exception()
             except asyncio.CancelledError:
@@ -160,6 +161,10 @@ class Server:
             'Accepted connection from %s'
             % (client_writer.get_extra_info('peername'),)
         )
+        print(
+            'Accepted connection from %s'
+            % (client_writer.get_extra_info('peername'),flush=True)
+        )
 
         request, headers = await self._parse_request(client_reader)
         scheme = self._identify_scheme(headers)
@@ -167,6 +172,10 @@ class Server:
         log.debug(
             'client: %d; request: %s; headers: %s; scheme: %s'
             % (client, request, headers, scheme)
+        )
+        print(
+            'client: %d; request: %s; headers: %s; scheme: %s'
+            % (client, request, headers, scheme), flush=True
         )
 
         for attempt in range(self._max_tries):
